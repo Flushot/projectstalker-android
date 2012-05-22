@@ -1,0 +1,6 @@
+.DS_Store
+Thumbs.db
+/.idea/workspace.xml
+/gen/
+/out/
+/target/

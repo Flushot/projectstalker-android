@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Short description (140 chars or less)"/>
+    <EditText android:id="@+id/edit_project_description"
+              android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
+              android:maxLines="4"
+              android:maxLength="140"
+              android:hint="Short description"
+              android:layout_width="0dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"/>
+    <Button android:id="@+id/add_project"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_project"/>
+</LinearLayout>

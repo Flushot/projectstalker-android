@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProjectStalker</string>
+    <string name="add_project">Add Project</string>
+    <string name="toggle_online">Go Offline</string>
+    <!-- Activity titles -->
+    <string name="login_title">Login</string>
+    <string name="add_project_title">Add Project</string>
+    <string name="signup_title">Sign Up</string>
+    <string name="add_comment_title">Add Comment</string>
+    <string name="project_details_title">Project Details</string>
+</resources>
