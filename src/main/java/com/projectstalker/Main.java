@@ -37,6 +37,9 @@ public class Main extends TabActivity {
 
         // Default tab
         tabHost.setCurrentTab(0);
+
+        // Start the position tracker.
+        startService(new Intent(this, PositionTracker.class));
     }
 
     @Override

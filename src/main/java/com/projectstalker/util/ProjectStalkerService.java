@@ -24,11 +24,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class ProjectStalkerService {
-    private static final String BASE_HOST = "192.168.1.3";
-    private static final String BASE_URL = "http://" + BASE_HOST + ":3000";
+    private static final String BASE_HOST = "projectstalker.com";
+    private static final String BASE_URL = "http://" + BASE_HOST;
 
     private HttpClient client;
     private HttpContext localContext;
@@ -36,7 +37,6 @@ public class ProjectStalkerService {
 
     private ObjectMapper objectMapper;
     private JsonFactory jsonFactory;
-    private JsonParser jsonParser;
 
     private boolean loggedIn;
     private Timer projectsRefreshTimer;
@@ -51,12 +51,6 @@ public class ProjectStalkerService {
         // Init JSON
         objectMapper = new ObjectMapper();
         jsonFactory = objectMapper.getJsonFactory();
-        try {
-            jsonParser = jsonFactory.createJsonParser("{\"k1\":\"v1\"}");
-        }
-        catch (IOException ex) {
-            throw new RuntimeException("Error creating JSON parser: " + ex.getMessage(), ex);
-        }
 
         projectsRefreshedSubscribers = new LinkedList<ProjectsRefreshed>();
 
@@ -109,8 +103,9 @@ public class ProjectStalkerService {
                             .put("password", password).toString();
             request.setEntity(new StringEntity(body, "UTF-8"));
 
-            //DefaultHttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute(request, localContext);
+            response.getEntity().consumeContent();
+
             StatusLine statusLine = response.getStatusLine();
             if (statusLine.getStatusCode() == 200) {
                 loggedIn = true;
@@ -140,8 +135,9 @@ public class ProjectStalkerService {
             HttpDelete request = new HttpDelete(BASE_URL + "/sessions/current");
             request.addHeader("Host", BASE_HOST);
 
-            //DefaultHttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute(request, localContext);
+            response.getEntity().consumeContent();
+
             StatusLine statusLine = response.getStatusLine();
             if (statusLine.getStatusCode() == 200) {
                 loggedIn = false;
@@ -180,8 +176,9 @@ public class ProjectStalkerService {
                             .put("accuracy", location.hasAccuracy() ? location.getAccuracy() : -1).toString();
             request.setEntity(new StringEntity(body, "UTF-8"));
 
-            //DefaultHttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute(request, localContext);
+            response.getEntity().consumeContent();
+
             StatusLine statusLine = response.getStatusLine();
             if (statusLine.getStatusCode() == 200)
                 return true;
@@ -199,6 +196,47 @@ public class ProjectStalkerService {
 
     public synchronized void subscribeToProjectsRefreshed(ProjectsRefreshed event) {
         projectsRefreshedSubscribers.add(event);
+    }
+
+    public synchronized boolean addProject(Project project) {
+        try {
+            HttpPost request = new HttpPost(BASE_URL + "/projects");
+            request.addHeader("Host", BASE_HOST);
+            request.addHeader("Accept", "application/json");
+            request.addHeader("Content-Type", "application/json");
+
+            String body = new JSONObject()
+                            .put("summary", project.getSummary()).toString();
+            request.setEntity(new StringEntity(body, "UTF-8"));
+
+            HttpResponse response = client.execute(request, localContext);
+            StatusLine statusLine = response.getStatusLine();
+            if (statusLine.getStatusCode() == 200) {
+                readProject(project, response.getEntity().getContent());
+                return true;
+            }
+            else
+                response.getEntity().consumeContent();
+        }
+        catch (JSONException ex) {
+            throw new RuntimeException(ex.getMessage(), ex);
+        }
+        catch (IOException ex) {
+            // TODO: Log I/O error instead
+            throw new RuntimeException(ex.getMessage(), ex);
+        }
+
+        return false;
+    }
+
+    private void readProject(Project project, InputStream inputStream) throws IOException {
+        JsonNode node = objectMapper.readTree(inputStream);
+        project.setId(node.get("id").asInt());
+        project.setSummary(node.get("summary").asText());
+        //project.setDistance(node.get("distance").asDouble());
+        //project.setLatitude(node.get("latitude").asDouble());
+        //project.setLongitude(node.get("longitude").asDouble());
+        //project.setFollowCount(node.get("follow_count").asInt());
     }
 
     public synchronized List<Project> getProjects() {
@@ -226,6 +264,8 @@ public class ProjectStalkerService {
                     projects.add(project);
                 }
             }
+            else
+                response.getEntity().consumeContent();
         }
         catch (IOException ex) {
             // TODO: Log I/O error instead

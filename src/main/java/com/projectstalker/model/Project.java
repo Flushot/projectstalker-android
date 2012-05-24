@@ -3,6 +3,7 @@ package com.projectstalker.model;
 public class Project {
     private int id;
     private String summary;
+    private String photoUrl;
     private double distance;
     private double latitude;
     private double longitude;
@@ -20,6 +21,13 @@ public class Project {
     }
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public double getDistance() {

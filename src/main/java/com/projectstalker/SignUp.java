@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.projectstalker.util.ProjectStalkerService;
 import com.projectstalker.util.StringUtils;
+import com.projectstalker.util.Utils;
 
 public class SignUp extends Activity {
     private EditText firstName, lastName, email, password, passwordConfirmation;
@@ -34,10 +35,9 @@ public class SignUp extends Activity {
                     finish();
                 }
                 else {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(SignUp.this);
-                    dialog.setTitle("Sign Up Failed");
-                    dialog.setMessage("Something went wrong when registering your account.");
-                    dialog.show();
+                    Utils.alert(SignUp.this,
+                            "Sign Up Failed",
+                            "Something went wrong when registering your account.");
                 }
             }
         });

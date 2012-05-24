@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.projectstalker.util.ProjectStalkerService;
+import com.projectstalker.util.Utils;
 
 public class Login extends Activity {
     private EditText email, password;
@@ -34,10 +35,9 @@ public class Login extends Activity {
                     finish();
                 }
                 else {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(Login.this);
-                    dialog.setTitle("Login Failed");
-                    dialog.setMessage("Please check your email or password and try again.");
-                    dialog.show();
+                    Utils.alert(Login.this,
+                            "Login Failed",
+                            "Please check your email or password and try again.");
                 }
             }
         });

@@ -1,5 +1,6 @@
 package com.projectstalker.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.telephony.TelephonyManager;
@@ -28,6 +29,13 @@ public class Utils {
         ConnectivityManager connectivityManager = (ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected() ||
                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
+    }
+
+    public static void alert(Context context, String title, String message) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.show();
     }
 
     public static void toastAndDebugLog(Context ctx, String tag, String message) {

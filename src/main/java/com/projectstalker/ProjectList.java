@@ -55,8 +55,12 @@ public class ProjectList extends ListActivity {
                     public void run() {
                         items.clear();
                         for (Project project : projects) {
-                            items.add(String.format("%s (d=%.4f)",
-                                    project.getSummary(), project.getDistance()));
+                            items.add(String.format("%s (d=%.4f, lat=%.6f, lng=%.6f)",
+                                    project.getSummary(),
+                                    project.getDistance(),
+                                    project.getLatitude(),
+                                    project.getLongitude()
+                            ));
                         }
 
                         adapter.notifyDataSetChanged();
