@@ -1,0 +1,6 @@
+http://itouchmap.com/latlong.html
+
+telnet localhost 5554
+
+geo fix -74.699773 40.857211
+geo fix -73.987563 40.742037

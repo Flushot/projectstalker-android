@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
+import com.projectstalker.util.ProjectStalkerService;
 import com.projectstalker.util.Utils;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -32,6 +33,7 @@ public class PositionTracker extends Service {
 
     private LocationManager locationManager;
     private LocationUpdateListener locationUpdateListener;
+    private ProjectStalkerService projectStalkerService;
     //private PowerManager.WakeLock wakeLock;
 
     // Object that receives interaction from clients
@@ -45,7 +47,7 @@ public class PositionTracker extends Service {
     private class LocationUpdateListener implements LocationListener {
         public void onLocationChanged(Location location) {
             //if (!location.hasAccuracy() || location.getAccuracy() <= 10 /*meters*/)
-                //sendLocation(PositionTracker.this, location);
+                projectStalkerService.updatePosition(PositionTracker.this, location);
         }
         public void onStatusChanged(String provider, int status, Bundle extras) {}
         public void onProviderEnabled(String provider) {}
@@ -69,6 +71,7 @@ public class PositionTracker extends Service {
 
         locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
         locationUpdateListener = new LocationUpdateListener();
+        projectStalkerService = ProjectStalkerService.getInstance();
 
         /*wakeLock = ((PowerManager)getSystemService(POWER_SERVICE))
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ProjectStalkerWakeLock");*/
@@ -81,14 +84,15 @@ public class PositionTracker extends Service {
     public void onStart(Intent intent, int startId) {
         Utils.toastAndDebugLog(this, TAG, "You are online");
 
-        Bundle extra = intent.getExtras();
+        //Bundle extra = intent.getExtras();
         //sessionKey = extra.getString("sessionKey");
 
         // Ensure the device doesn't fully go to sleep and shut down CPU
         //wakeLock.acquire();
 
         // Immediately record last known location
-        //sendLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+        projectStalkerService.updatePosition(this,
+                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
 
         // Subscribe to location updates
         Criteria criteria = new Criteria();

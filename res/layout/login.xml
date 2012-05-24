@@ -1,9 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="fill_parent"
+              android:gravity="center">
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="Welcome to ProjectStalker"/>
+              android:text="Email address"/>
+    <EditText android:id="@+id/login_email_text"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:hint="Email address"
+              android:text="flushot@gmail.com"/>
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Password"/>
+    <EditText android:id="@+id/login_password_text"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="gr0wya!"
+              android:hint="Password"
+              android:inputType="textPassword"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center">
+        <Button android:id="@+id/login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"/>
+        <Button android:id="@+id/login_signup_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"/>
+    </LinearLayout>
 </LinearLayout>

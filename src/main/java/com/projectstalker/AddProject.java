@@ -13,7 +13,7 @@ public class AddProject extends Activity {
         setContentView(R.layout.add_project);
 
         // Add project
-        addProjectButton = (Button)findViewById(R.id.add_project);
+        addProjectButton = (Button)findViewById(R.id.add_project_button);
         addProjectButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 saveProject();

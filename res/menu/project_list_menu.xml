@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/add_project"
+    <item android:id="@+id/menuitem_add_project"
           android:icon="@drawable/ic_tab_projects_white"
           android:title="@string/add_project"/>
-    <item android:id="@+id/toggle_online"
+    <item android:id="@+id/menuitem_toggle_online"
           android:icon="@drawable/ic_tab_projects_white"
           android:title="@string/toggle_online"/>
+    <item android:id="@+id/menuitem_login"
+          android:icon="@drawable/ic_tab_projects_white"
+          android:title="Login"/>
 </menu>
