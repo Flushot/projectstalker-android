@@ -1,6 +1,6 @@
 /**
  * PROPRIETARY/CONFIDENTIAL
- * Copyright © 2012 GrowYa, Inc.
+ * Copyright (c) 2012 GrowYa, Inc.
  * All Rights Reserved.
  */
 package com.projectstalker.util;
