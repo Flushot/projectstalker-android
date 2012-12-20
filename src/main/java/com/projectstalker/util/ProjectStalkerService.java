@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.util.*;
 
 public class ProjectStalkerService {
-    private static final String BASE_HOST = "projectstalker.com";
+    private static final String BASE_HOST = "127.0.0.1:3000";
     private static final String BASE_URL = "http://" + BASE_HOST;
 
     private HttpClient client;

@@ -1,8 +1,3 @@
-/**
- * PROPRIETARY/CONFIDENTIAL
- * Copyright (c) 2012 GrowYa, Inc.
- * All Rights Reserved.
- */
 package com.projectstalker.util;
 
 import java.util.*;
